@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
 	darkMode: ["class"],
@@ -64,10 +65,19 @@ export default {
 				}
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+        // PRD: effects.borderRadius.default: "rounded-md"
+        // CSS var --radius is set to 0.375rem (Tailwind's 'md')
+				lg: 'calc(var(--radius) + 0.125rem)', // results in 0.5rem (rounded-lg)
+				md: 'var(--radius)',                 // results in 0.375rem (rounded-md)
+				sm: 'calc(var(--radius) - 0.125rem)'  // results in 0.25rem (rounded-sm)
 			},
+      fontFamily: {
+        // PRD: typography.primaryFont: "Arial, sans-serif"
+        // CSS var --font-sans is "Arial", sans-serif
+        sans: ['var(--font-sans)', ...fontFamily.sans],
+      },
+      // PRD: effects.shadows.default: "shadow-sm". This implies using the 'shadow-sm' utility class.
+      // No changes to extend.boxShadow are strictly required by the PRD unless aliasing/overriding defaults.
 			keyframes: {
 				'accordion-down': {
 					from: {
